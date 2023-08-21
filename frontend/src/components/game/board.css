@@ -1,0 +1,39 @@
+.board {
+    background-color: black;
+    color: gold;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+table {
+    table-layout: fixed;
+    width: 90% ;
+    margin: auto;
+}
+
+.container{
+    margin: 20px auto;
+    width: fit-content; 
+    border: 1px solid gold;
+}
+
+.card {
+    height: 100px;
+    width: 100px;
+    background-color: darkblue;
+    color: goldenrod;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+.titleCard {
+    height: 100px;
+    width: 100px;
+    background-color: darkblue;
+    color: white;
+    font-style: uppercase;
+    border-radius: 5px;
+    margin: 5px;
+    text-transform: uppercase;
+}
