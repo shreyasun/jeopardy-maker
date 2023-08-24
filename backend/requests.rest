@@ -1,0 +1,28 @@
+GET http://localhost:8800/trivia/
+
+### 
+
+POST http://localhost:8800/trivia/new/
+Content-Type: application/json
+
+{
+    "category":"Geography",
+    "answer":"What is N'Djamena?",
+    "question":"This city is the capital of Chad"
+}
+
+###
+
+DELETE http://localhost:8800/trivia/delete/64e6ba4e2bb89d9950ccdb3f
+
+###
+
+PUT http://localhost:8800/trivia/update/64e6ba4e2bb89d9950ccdb3f
+
+Content-Type: application/json
+
+{
+    "category": "New Category",
+    "question": "Updated question?",
+    "answer": "Updated answer"
+}
