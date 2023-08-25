@@ -4,12 +4,13 @@
     display: flex;
     flex-direction: column;
     padding: 10px;
+    height: 100%;
 }
 
 table {
     table-layout: fixed;
     width: 90% ;
-    margin: auto;
+    margin: 0 auto;
 }
 
 .container{
@@ -19,8 +20,7 @@ table {
 }
 
 .card {
-    height: 100px;
-    width: 100px;
+    height: 120px;
     background-color: darkblue;
     color: goldenrod;
     border-radius: 5px;
@@ -28,8 +28,7 @@ table {
 }
 
 .titleCard {
-    height: 100px;
-    width: 100px;
+    height: 120px;
     background-color: darkblue;
     color: white;
     font-style: uppercase;

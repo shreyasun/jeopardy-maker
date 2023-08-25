@@ -1,0 +1,103 @@
+.deck{
+    background-color: black;
+    background-size: cover;
+    padding: 10px;
+    min-height: 100vh;
+}
+
+.deckHeader {
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.categorySelection{
+    height: auto;
+    max-width: 90%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    background-color: darkblue;
+    
+    padding: 20px;
+}
+
+.currentCategories{
+    
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: auto;
+}
+
+.currentCards{
+    max-width: 90%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+    margin: auto;
+}
+
+.flashcard{
+    border: 2px solid gold;
+    background-color: darkblue;
+    border-radius: 10px;
+    max-width: 500px;
+    margin: 20px;
+}
+
+.flashcardPopup{
+    border: 2px solid gold;
+    background-color: darkblue;
+    border-radius: 10px;
+    max-width: 500px;
+    margin: 20px;
+    position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 100%;
+	max-width: 400px;
+	padding: 32px;
+	border-radius: 16px;
+    box-shadow: 32px 32px 32px var(--dark);
+}
+.closePopup {
+	position: absolute;
+	top: 16px;
+	right: 16px;
+	width: 20px;
+	height: 20px;
+	font-size: 20px;
+	color: var(--dark);
+	cursor: pointer;
+}
+
+.card-bottom{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+form{
+    padding: 5px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+textArea, select {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 2px solid black;
+    border-radius: 5px;
+    resize: vertical;
+}
+
+label {
+    position: left;
+}
+

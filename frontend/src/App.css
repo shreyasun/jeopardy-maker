@@ -2,21 +2,68 @@
   text-align: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+h1, h2, h3, h4, h5, h6, p{
+  color: white;
+  padding: 0;
 }
 
-.App-link {
-  color: #61dafb;
+.button1{
+  background-color: darkblue;
+  color: gold;
+  cursor: pointer;
+  border-radius: 10px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 40px;
+  padding: 10px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.button2{
+  background-color: gold;
+  color: darkblue;
+  cursor: pointer;
+  border-radius: 10px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 20px;
+  padding: 10px;
+}
+
+.button3{
+  background-color: gold;
+  color: darkblue;
+  border-radius: 10px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 16px;
+  padding: 8px;
+}
+
+.button4{
+  background-color: gold;
+  color: darkblue;
+  cursor: pointer;
+  border-radius: 10px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 15px;
+  padding: 10px;
+}
+
+.button1:hover{
+  scale: 1.05;
+  transition: 1.5s;
+}
+
+.button2:hover{
+  scale: 1.05;
+  transition: 1.5s;
 }

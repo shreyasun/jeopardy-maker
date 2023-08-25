@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
-import "./board.css"
+import React, { useState } from 'react';
+import "./board.css";
+import Header from '../header/Header';
 
 var cards = [
   {
@@ -160,7 +161,7 @@ const trivia = cards.map(data => data.cards);
 const Board = () => {
   return (
     <div className='board'>
-      <h3>This is Jeopardy!</h3>
+      <Header />
       <table>
         <thead>
           <tr className='titleCard'>

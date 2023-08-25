@@ -1,0 +1,12 @@
+h1{
+    color: gold;
+}
+
+.header{
+    background-color: black;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
