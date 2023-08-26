@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import "./card.css"
-import "./deck.css"
 import "../../App.css"
 import { BsFillTrashFill, BsFillCheckCircleFill } from "react-icons/bs";
 import { LuEdit } from "react-icons/lu";
-import { AiOutlinePlus, AiFillCloseCircle } from "react-icons/ai";
+import { AiOutlinePlus, AiFillCloseCircle, AiFillPlayCircle } from "react-icons/ai";
 import axios from 'axios';
 
 
@@ -138,6 +137,13 @@ const CardsDeck = () => {
 
     console.log("question:", question, "answer:", answer, "category:", category)
 
+    // If max number of cards for that category has been reached
+    const cardsForCategory = currentCards.filter((card) => card.category === category);
+    if (cardsForCategory.length >= currentCategories.length) {
+      window.alert("You've already reached the max number of cards for this category! Select another category");
+      return;
+    }
+
     // Handle duplicate question
     if (currentCards.find(cards => cards.question !== "" && cards.question === question)){
       window.alert("Duplicate question! Please add a unique question.");
@@ -185,6 +191,13 @@ const CardsDeck = () => {
   // Function to edit card - can edit any or all fields
   const editCard = async (id) => {
     console.log("question:", question, "answer:", answer, "category:", category)
+
+    // If max number of cards for that category has been reached
+    const cardsForCategory = currentCards.filter((card) => card.category != card.category && card.category === category);
+    if (cardsForCategory.length >= currentCategories.length) {
+      window.alert("You've already reached the max number of cards for this category! Select another category");
+      return;
+    }
 
     // Handle duplicate question
     if (currentCards.find(cards => cards.question !== "" && cards.question != cards.question && cards.question === question)){
@@ -248,25 +261,41 @@ const CardsDeck = () => {
     setAnswer("");
   }
 
+  const countCardsCategories = () => {
+    const diffCategories = currentCards.map((currCard) => currCard.category)
+    console.log("categories:", diffCategories)
+    let categoryDictionary = Object();
+    for (let i = 0; i < diffCategories.length; i++){
+      if (diffCategories[i] in categoryDictionary){
+        categoryDictionary[diffCategories[i]] += 1;
+      } else {
+        categoryDictionary[diffCategories[i]] = 1;
+      }
+    }
+    return Object.entries(categoryDictionary);
+  }
   
   return (
     <div className='deck'>
       {/* Deck Header - deck name and add card button */}
       <div className="deckHeader">
-        <h1>Deck</h1>
-        <div className="button1" onClick={() => (setMode("add"))}><AiOutlinePlus />Add Card</div>
+        <h1>Cards</h1>
+        <div style={{display: "flex", gap: "20px"}}>
+          <div className="button1" onClick={() => setMode(currentCards.length !== currentCategories.length * currentCategories.length ? "add" : (window.alert("You have reached the max number of allowed cards"), "view"))}><AiOutlinePlus />Add Card</div>
+          <div className="playButton"><AiFillPlayCircle />Let's Play!</div>
+        </div>
       </div>
 
       { /* Category Selection Section */}
       <div className="categorySelection">
         { /* Category Selection Header */}
         <div style={{display: "flex", justifyContent: "space-between"}}>
-          <h4>Category Settings</h4>
+          <h2>Category Settings</h2>
           <div className="button3" onClick = {() => setMode("category")}><AiOutlinePlus />Add Category</div>
         </div>      
         {/* Popup to add category */}
         {mode === "category" && <div className='flashcardPopup'>
-          <div className="closePopup" onClick={() => setMode("")} ><AiFillCloseCircle style={{color: "gold"}}/></div>
+          <div className="closePopup" onClick={() => setMode("")}><AiFillCloseCircle style={{color: "gold"}}/></div>
           <h4>Add New Category</h4>
           <form>
             <label><p>New Category</p></label>
@@ -278,9 +307,14 @@ const CardsDeck = () => {
         </div>}
         {/* Display of added categories (with option to delete) */}
         <div className="currentCategories">
-          {currentCategories.map((categoryOption) => <div className='button3'><div><BsFillTrashFill style={{cursor:"pointer"}} onClick={() => deleteCategory(categoryOption._id)}/></div>{categoryOption.label}</div>)}
+          {currentCategories.map((categoryOption) => <div className='label'><div><BsFillTrashFill style={{cursor:"pointer"}} onClick={() => deleteCategory(categoryOption._id)}/></div>{categoryOption.label}</div>)}
         </div>
-        <p>Your board must have {currentCategories.length * currentCategories.length} clues! ({currentCategories.length} per category)</p>
+        <div style={{display: "flex", flexDirection: "column"}}>
+          <h4>Your board must have {currentCategories.length * currentCategories.length} clues ({currentCategories.length} per category)! Total number of cards so far: {currentCards.length}</h4>
+          <div className="card-bottom">
+            {countCardsCategories().map((counts) => <div style={{display: "flex"}}><h5>{counts[0]}: <p>{counts[1]}</p></h5></div>)}
+          </div>
+        </div>
       </div>
 
       {/* Display of current cards */}
@@ -289,9 +323,9 @@ const CardsDeck = () => {
         {/* Render cards added so far in the page in view mode */}
         {currentCards.length > 0 ? currentCards.map(currentCard => (
           <div className='flashcard'>
-            <h5>Category: {currentCard.category}</h5>
-            <h5>Question: {currentCard.question}</h5>
-            <h5>Answer: {currentCard.answer}</h5>
+            <h4>Category: {currentCard.category}</h4>
+            <h4>Question: {currentCard.question}</h4>
+            <h4>Answer: {currentCard.answer}</h4>
             {/* Delete and edit buttons in bottom of card in view mode */}
             <div className="card-bottom">
               <div className="button2" onClick={() => deleteCard(currentCard._id)}><BsFillTrashFill />Delete</div>
@@ -307,18 +341,18 @@ const CardsDeck = () => {
       {(mode === "add") ? (
         <div className='flashcardPopup'>
           <div className="closePopup" onClick={() => setMode("")}><AiFillCloseCircle style={{color: "gold"}}/></div>
-          <h4>Add New Question and Answer</h4>
-          <p>All fields are required!</p>
+          <h4>Add New Card</h4>
+          <h5>All fields are required!</h5>
           <form>
-            <label><p>Category</p></label>
+            <label><h4>Category</h4></label>
             {/* Display dropdown where user can select category from added options */}
             <select onChange={handleCategoryChange} required> 
               <option value="Select a category">Select a category</option>
               {currentCategories.map((categoryOption) => <option key={categoryOption.label} value={categoryOption.value}>{categoryOption.label}</option>)}
             </select>
-            <label><p>Question</p></label>
+            <label><h4>Question</h4></label>
             <textArea type="text" placeholder="Question in the form of a clue, i.e: This city the capital of the US" onChange={(e) => {setQuestion(e.target.value)}} required></textArea>
-            <label><p>Answer</p></label>
+            <label><h4>Answer</h4></label>
             <textArea rows="2" type="text" placeholder="Answer in the form of a question, i.e. What is Washington D.C.?" onChange={(e) => setAnswer(e.target.value)} required></textArea>
           </form>
           {/* Add card button in bottom of card in view mode */}
@@ -332,16 +366,18 @@ const CardsDeck = () => {
       {(mode === "edit") ? (
         <div className='flashcardPopup'>
           <div className="closePopup" onClick={() => setMode("")}><AiFillCloseCircle style={{color: "gold"}}/></div>
+          <h4>Edit Card</h4>
+          <h5>All fields are required!</h5>
           <form >
-            <label><p>Category</p></label>
+            <label><h4>Category</h4></label>
             {/* Display dropdown where user can select category from added options */}
             <select onChange={handleCategoryChange} required> 
               <option value="Select a category">{category}</option>
               {currentCategories.map((categoryOption) => <option key={categoryOption.label} value={categoryOption.value}>{categoryOption.label}</option>)}
             </select>
-            <label><p>Question</p></label>
+            <label><h4>Question</h4></label>
             <textArea type="text" placeholder={question} onChange={(e) => {setQuestion(e.target.value)}}>{question}</textArea>
-            <label><p>Answer</p></label>
+            <label><h4>Answer</h4></label>
             <textArea type="text" placeholder={answer} onChange={(e) => {setAnswer(e.target.value)}}>{answer}</textArea>
           </form>
           {/* Delete and save buttons in bottom of card in edit mode */}
