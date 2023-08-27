@@ -4,6 +4,7 @@ import "../../App.css"
 import { BsFillTrashFill, BsFillCheckCircleFill } from "react-icons/bs";
 import { LuEdit } from "react-icons/lu";
 import { AiOutlinePlus, AiFillCloseCircle, AiFillPlayCircle } from "react-icons/ai";
+import { Link } from "react-router-dom";
 import axios from 'axios';
 
 
@@ -139,7 +140,7 @@ const CardsDeck = () => {
 
     // If max number of cards for that category has been reached
     const cardsForCategory = currentCards.filter((card) => card.category === category);
-    if (cardsForCategory.length >= currentCategories.length) {
+    if (cardsForCategory.length >= 5) {
       window.alert("You've already reached the max number of cards for this category! Select another category");
       return;
     }
@@ -281,8 +282,8 @@ const CardsDeck = () => {
       <div className="deckHeader">
         <h1>Cards</h1>
         <div style={{display: "flex", gap: "20px"}}>
-          <div className="button1" onClick={() => setMode(currentCards.length !== currentCategories.length * currentCategories.length ? "add" : (window.alert("You have reached the max number of allowed cards"), "view"))}><AiOutlinePlus />Add Card</div>
-          <div className="playButton"><AiFillPlayCircle />Let's Play!</div>
+          <div className="button1" onClick={() => setMode(currentCards.length !== currentCategories.length * 5 ? "add" : (window.alert("You have reached the max number of allowed cards"), "view"))}><AiOutlinePlus />Add Card</div>
+          {(currentCards.length === currentCategories.length * 5) ? <Link style={{ textDecoration: 'none' }} to="/"><div className="playButton"><AiFillPlayCircle />Let's Play!</div></Link> : <div className="playButton" onClick={() => {window.alert("You need more cards to play!")}}><AiFillPlayCircle />Let's Play!</div>}
         </div>
       </div>
 
@@ -310,9 +311,9 @@ const CardsDeck = () => {
           {currentCategories.map((categoryOption) => <div className='label'><div><BsFillTrashFill style={{cursor:"pointer"}} onClick={() => deleteCategory(categoryOption._id)}/></div>{categoryOption.label}</div>)}
         </div>
         <div style={{display: "flex", flexDirection: "column"}}>
-          <h4>Your board must have {currentCategories.length * currentCategories.length} clues ({currentCategories.length} per category)! Total number of cards so far: {currentCards.length}</h4>
+          <h4>Your board must have {currentCategories.length * 5} clues (5 per category)! Total number of cards so far: {currentCards.length}</h4>
           <div className="card-bottom">
-            {countCardsCategories().map((counts) => <div style={{display: "flex"}}><h5>{counts[0]}: <p>{counts[1]}</p></h5></div>)}
+            {countCardsCategories().map((counts) => <div style={{display: "flex"}}><h5>{counts[0]}: {counts[1]}</h5></div>)}
           </div>
         </div>
       </div>
