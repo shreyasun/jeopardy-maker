@@ -4,7 +4,7 @@ import Footer from "../footer/Footer"
 import { Link } from "react-router-dom";
 import "./board.css";
 import axios from "axios"
-import { PiCards } from "react-icons/pi";
+import { PiCardsFill } from "react-icons/pi";
 import { CgProfile } from "react-icons/cg";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { BsFillCheckCircleFill } from "react-icons/bs";
@@ -93,7 +93,7 @@ const Board = () => {
       <div>
         <div className="header">
           <div style={{display: "flex", gap: "20px"}}>
-            <Link to="/CardsDeck" style={{textDecoration: "none"}}><div className="button1" onClick={resetGame}><PiCards />Edit Questions</div></Link>
+            <Link to="/CardsDeck" style={{textDecoration: "none"}}><div className="button1" onClick={resetGame}><PiCardsFill />Edit Questions</div></Link>
             <div className='button1' type="submit" onClick = {() => setMode("help")}><BiSolidHelpCircle />Instructions</div>
           </div>
           <div style={{display: "flex", gap: "20px"}}>
