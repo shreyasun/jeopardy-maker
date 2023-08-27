@@ -58,10 +58,12 @@
 	left: 50%;
 	transform: translate(-50%, -50%);
 	width: 100%;
-	max-width: 400px;
+	max-width: 600px;
 	padding: 32px;
 	border-radius: 16px;
     box-shadow: 32px 32px 32px var(--dark);
+    max-height: 85vh;
+    overflow: scroll;
 }
 .closePopup {
 	position: absolute;

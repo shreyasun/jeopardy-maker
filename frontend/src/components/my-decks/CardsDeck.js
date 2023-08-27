@@ -283,7 +283,7 @@ const CardsDeck = () => {
         <h1>Cards</h1>
         <div style={{display: "flex", gap: "20px"}}>
           <div className="button1" onClick={() => setMode(currentCards.length !== currentCategories.length * 5 ? "add" : (window.alert("You have reached the max number of allowed cards"), "view"))}><AiOutlinePlus />Add Card</div>
-          {(currentCards.length === currentCategories.length * 5) ? <Link style={{ textDecoration: 'none' }} to="/"><div className="playButton"><AiFillPlayCircle />Let's Play!</div></Link> : <div className="playButton" onClick={() => {window.alert("You need more cards to play!")}}><AiFillPlayCircle />Let's Play!</div>}
+          {(currentCards.length === currentCategories.length * 5) ? <Link style={{ textDecoration: 'none' }} to="/Board"><div className="playButton"><AiFillPlayCircle />Let's Play!</div></Link> : <div className="playButton" onClick={() => {window.alert("You need more cards to play!")}}><AiFillPlayCircle />Let's Play!</div>}
         </div>
       </div>
 
