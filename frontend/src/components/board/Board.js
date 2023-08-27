@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import Help from "../help/Help"
+import Footer from "../footer/Footer"
 import { Link } from "react-router-dom";
 import "./board.css";
+import axios from "axios"
 import { PiCards } from "react-icons/pi";
 import { CgProfile } from "react-icons/cg";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { BiSolidShow, BiSolidHelpCircle } from "react-icons/bi";
 import { FaRedoAlt } from "react-icons/fa";
-import axios from "axios"
 
 
 const Board = () => {
   // Cards we have so far
   const [cards, setCards] = useState([]);
+  // other states
   const [isLoading, setIsLoading] = useState(true);
   const [mode, setMode] = useState("");
   const [score, setScore] = useState(0);
@@ -37,31 +39,30 @@ const Board = () => {
     }
   }
 
-  // Render added categories and cards
+  // Render all cards, currently clicked cards and current score
   useEffect(() => {
+    getCards();
     const currScore = JSON.parse(localStorage.getItem('score'));
     if (currScore){
       setScore(currScore);
     }
     const currClickedCards = JSON.parse(localStorage.getItem('clickedCards'));
     if (currClickedCards) {
-      setClickedCards(currClickedCards);
+      setClickedCards([...currClickedCards]);
     }
-    getCards();
   }, [])
 
-  console.log("clickedCards:", clickedCards)
-
+  // Get categories
   const categories = [...new Set(cards.map(data => data.category))];
-
-  // create object categorizing each question/answer
+  // Create dictionary mapping category to associated question/answer
   let categorizedTrivia = {};
   categories.forEach(category => {
     categorizedTrivia[category] = cards.filter(card => card.category === category);
   });
-
+  // Get Question/Answer sets
   const trivia = Object.values(categorizedTrivia)
 
+  // Increase score and save it to state / local storage
   const increaseScore = () => {
     const newScore = score + currPoints;
     setScore(newScore);
@@ -69,20 +70,20 @@ const Board = () => {
     setMode("");
   }
 
+  // Determine already visited cards based on identifier (which is the card number based on its coordinates)
   const handleCardClick = (cardId) => {
-    if (!clickedCards.includes(cardId)) {
-      setClickedCards(prevClickedCards => [...prevClickedCards, cardId]);
-      localStorage.setItem('clickedCards', JSON.stringify(clickedCards));
-    }
+    const newClickedCards = [...clickedCards, cardId];
+    setClickedCards(newClickedCards);
+    localStorage.setItem('clickedCards', JSON.stringify(newClickedCards));
   }
 
+  // Reset score and saved values
   const resetGame = () => {
     setClickedCards([]);
     setScore(0);
     localStorage.removeItem('clickedCards');
     localStorage.removeItem('score');
   }
-
 
   return (
     <div className="board">
@@ -92,7 +93,7 @@ const Board = () => {
       <div>
         <div className="header">
           <div style={{display: "flex", gap: "20px"}}>
-            <Link to="/CardsDeck" style={{textDecoration: "none"}}><div className="button1"><PiCards />Edit Questions</div></Link>
+            <Link to="/CardsDeck" style={{textDecoration: "none"}}><div className="button1" onClick={resetGame}><PiCards />Edit Questions</div></Link>
             <div className='button1' type="submit" onClick = {() => setMode("help")}><BiSolidHelpCircle />Instructions</div>
           </div>
           <div style={{display: "flex", gap: "20px"}}>
@@ -104,6 +105,7 @@ const Board = () => {
         <h3>Score: ${score}</h3>
         <table>
           <thead>
+            {/* Categories */}
             <tr className='titleCard'>
               {categories.map((category, i) => {
                 return <th className="tableCard" key={i}>{category}</th>
@@ -111,6 +113,7 @@ const Board = () => {
             </tr>
           </thead>
           <tbody>
+            {/* For each row, map the current value to each category using the first category and its respective questions as a frame of reference */}
             {trivia[0].map((qs, currQAIndex) => (
               <tr key={currQAIndex} className='card'>
                 {/* iterate through categories and make a cell under the correct category */}
@@ -130,7 +133,9 @@ const Board = () => {
         <div className='flashcardPopup'>
           <div className="closePopup" onClick={() => {setMode(""); setShowAnswer(false);}}><AiFillCloseCircle style={{color: "gold"}}/></div>
           <h2>{currQA.question}</h2>
-          <div className='button3' type="submit" onClick = {() => {setShowAnswer(!showAnswer)}} style={{margin: "0 125px"}}><BiSolidShow />Show Answer</div>
+          <div style={{display: "flex", alignItems: "center", justifyContent: "center", margin: "20px"}}>
+            <div className='button3' type="submit" onClick = {() => {setShowAnswer(!showAnswer)}}><BiSolidShow />Show Answer</div>
+          </div>
           {showAnswer ? <h3>{currQA.answer}</h3> : ""}
           <div className="card-bottom">
             <div className='button2' type="submit" onClick = {() => setMode("")}><AiFillCloseCircle />Incorrect</div>
@@ -145,9 +150,7 @@ const Board = () => {
           <Help />
         </div>
       ) : ""}
-      <div style={{display: "flex"}}>
-       
-      </div>
+      <Footer />
     </div>
   )
 }
