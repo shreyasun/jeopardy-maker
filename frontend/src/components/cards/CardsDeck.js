@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Footer from "../footer/Footer"
 import Help from "../help/Help"
+import { UserAuth } from '../../context/AuthContext';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import "./card.css"
@@ -9,6 +10,7 @@ import { BsFillTrashFill, BsFillCheckCircleFill } from "react-icons/bs";
 import { LuEdit } from "react-icons/lu";
 import { AiOutlinePlus, AiFillCloseCircle, AiFillPlayCircle } from "react-icons/ai";
 import { BiSolidHelpCircle } from "react-icons/bi"
+import { CgProfile } from "react-icons/cg"
 
 
 const CardsDeck = () => {
@@ -278,6 +280,16 @@ const CardsDeck = () => {
     }
     return Object.entries(categoryDictionary);
   }
+
+  // Handling user logout
+  const { logOut } = UserAuth();
+  const handleLogOut = async () => {
+    try {
+      await logOut()
+    } catch (error) {
+      console.log(error)
+    }
+  }
   
   return (
     <div className='deck'>
@@ -285,6 +297,7 @@ const CardsDeck = () => {
       <div className="deckHeader">
         <h1>Cards</h1>
         <div style={{display: "flex", gap: "20px"}}>
+          <div className="button1" onClick={handleLogOut}><CgProfile />Log Out</div>
           <div className='button1' type="submit" onClick = {() => setMode("help")}><BiSolidHelpCircle />Instructions</div>
           <div className="button1" onClick={() => setMode(currentCards.length !== currentCategories.length * 5 ? "add" : (window.alert("You have reached the max number of allowed cards"), "view"))}><AiOutlinePlus />Add Card</div>
           {(currentCards.length === currentCategories.length * 5) ? <Link style={{ textDecoration: 'none' }} to="/Board"><div className="playButton"><AiFillPlayCircle />Let's Play!</div></Link> : <div className="playButton" onClick={() => {window.alert("You need more cards to play!")}}><AiFillPlayCircle />Let's Play!</div>}

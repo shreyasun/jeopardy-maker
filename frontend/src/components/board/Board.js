@@ -10,6 +10,7 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { BiSolidShow, BiSolidHelpCircle } from "react-icons/bi";
 import { FaRedoAlt } from "react-icons/fa";
+import { UserAuth } from '../../context/AuthContext';
 
 
 const Board = () => {
@@ -85,6 +86,16 @@ const Board = () => {
     localStorage.removeItem('score');
   }
 
+  // Handling user logout
+  const { logOut } = UserAuth();
+  const handleLogOut = async () => {
+    try {
+      await logOut()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div className="board">
       {isLoading ? (
@@ -98,7 +109,7 @@ const Board = () => {
           </div>
           <div style={{display: "flex", gap: "20px"}}>
             <div className='button1' type="submit" onClick={resetGame}><FaRedoAlt />Reset Game</div>
-            <Link to="/myAccount" style={{textDecoration: "none"}}><div className="button1"><CgProfile />My Account</div></Link>
+            <div className="button1" onClick={handleLogOut}><CgProfile />Log Out</div>
           </div>
         </div>
         <h1>This is Jeopardy!</h1>
