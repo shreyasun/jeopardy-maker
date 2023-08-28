@@ -116,3 +116,23 @@ h5{
   scale: 1.05;
   transition: 1.5s;
 }
+
+/* LOGIN */
+
+.login{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: black;
+}
+
+.loginCard{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+  width: 60vw;
+  background-color: darkblue;
+}
