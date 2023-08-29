@@ -1,0 +1,19 @@
+
+/* LOGIN */
+
+.login {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: black;
+  }
+  
+  .loginCard{
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
