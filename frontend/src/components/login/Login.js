@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
+import "./login.css"
+import Footer from '../footer/Footer';
 import { UserAuth } from '../../context/AuthContext'
 import { GoogleButton } from "react-google-button"
 import { useNavigate } from 'react-router-dom';
-import Footer from '../footer/Footer';
 
 const Login = () => {
     const { googleSignIn, user } = UserAuth();
