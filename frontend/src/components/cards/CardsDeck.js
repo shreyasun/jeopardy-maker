@@ -314,7 +314,7 @@ const CardsDeck = () => {
       console.log(error)
     }
   }
-  
+
   return (
     <div className='deck'>
       {/* Deck Header - deck name and add card button */}
@@ -324,7 +324,7 @@ const CardsDeck = () => {
           <div className="button1" onClick={handleLogOut}><CgProfile />Log Out</div>
           <div className='button1' type="submit" onClick = {() => setMode("help")}><BiSolidHelpCircle />Instructions</div>
           <div className="button1" onClick={() => setMode(currentCards.length !== currentCategories.length * 5 ? "add" : (window.alert("You have reached the max number of allowed cards"), "view"))}><AiOutlinePlus />Add Card</div>
-          {(currentCards.length === currentCategories.length * 5) ? <Link style={{ textDecoration: 'none' }} to="/Board"><div className="playButton"><AiFillPlayCircle />Let's Play!</div></Link> : <div className="playButton" onClick={() => {window.alert("You need more cards to play!")}}><AiFillPlayCircle />Let's Play!</div>}
+          {(currentCards.length !== 0 && currentCategories.length !== 0 && currentCards.length === currentCategories.length * 5) ? <Link style={{ textDecoration: 'none' }} to="/Board"><div className="playButton"><AiFillPlayCircle />Let's Play!</div></Link> : <div className="playButton" onClick={() => {window.alert("You need more cards to play!")}}><AiFillPlayCircle />Let's Play!</div>}
         </div>
       </div>
 
