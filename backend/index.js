@@ -26,9 +26,9 @@ const Categories = require("./models/Categories");
 // requests for TRIVIA
 
 // get: display question on popup
-app.get("/trivia", async (req, res) => {
+app.get("/trivia/", async (req, res) => {
     try {
-        const trivia = await Trivia.find();
+        const trivia = await Trivia.find({});
         res.json({message: trivia});
     } catch (err) {
         console.log(err);
@@ -44,6 +44,7 @@ app.post("/trivia/new/", async (req, res) => {
             category: req.body.category,
             question: req.body.question,
             answer: req.body.answer,
+            userEmail: req.body.userEmail
         })
         await trivia.save();
         res.json({message: trivia});
@@ -62,6 +63,7 @@ app.put("/trivia/update/:id", async (req, res) => {
                 category: req.body.category,
                 question: req.body.question,
                 answer: req.body.answer,
+                userEmail: req.body.userEmail
             }
         );
         res.json({message: trivia});
@@ -98,13 +100,13 @@ app.get("/categories", async (req, res) => {
     }
 })
 
-
 // post: add new category to selection dropdown
 app.post("/categories/new/", async (req, res) => {
     try {
         const category = new Categories({
             label: req.body.label,
             value: req.body.value,
+            userEmail: req.body.userEmail
         })
         await category.save();
         res.json({message: category});
