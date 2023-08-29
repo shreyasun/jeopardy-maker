@@ -15,8 +15,19 @@ import { CgProfile } from "react-icons/cg"
 
 const CardsDeck = () => {
 
+  const { user } = UserAuth();
+  const storedUserEmail = JSON.parse(localStorage.getItem('userEmail'));
+
+  if (!storedUserEmail){
+    localStorage.setItem('userEmail', JSON.stringify(user.email));
+  }
+
   // Render added categories and cards
   useEffect(() => {
+    const storedUserEmail = localStorage.getItem('userEmail');
+    if (!storedUserEmail) {
+      localStorage.setItem('userEmail', JSON.stringify(user.email));
+    }
     getCategories();
     getCards();
   }, [])
@@ -27,9 +38,13 @@ const CardsDeck = () => {
   // Fetch all added cards for display
   const getCards = async () => {
     try {
+      const userEmail = JSON.parse(localStorage.getItem('userEmail'));
       // Get cards from Database and set it to a local deck
+      console.log("useremail in get cards:", userEmail)
       const allCards = await axios.get(`http://localhost:8800/trivia`);
-      setCurrentCards(allCards.data.message);
+      const allDocuments = allCards.data.message;
+      const userCards = allDocuments.filter(card => card.userEmail === userEmail)
+      setCurrentCards(userCards);
       console.log("Current Cards:", allCards.data.message);
     } catch(error) {
       // Handle error
@@ -47,8 +62,12 @@ const CardsDeck = () => {
   const getCategories = async () => {
     try {
       // get database values
+      const userEmail = JSON.parse(localStorage.getItem('userEmail'));
+      console.log("userEmail in get categories:", userEmail)
       const allCategories = await axios.get(`http://localhost:8800/categories`);
-      setCurrentCategories(allCategories.data.message);
+      const allDocuments = allCategories.data.message;
+      const userCards = allDocuments.filter(card => card.userEmail === userEmail)
+      setCurrentCategories(userCards);
       console.log("current categories:", currentCategories);
     } catch(error) {
       // Handle error
@@ -86,12 +105,14 @@ const CardsDeck = () => {
       window.alert("Please fill in all the required fields.");
       return;
     }
-
+    
     try {
       // Add category to database
+      const userEmail = JSON.parse(localStorage.getItem('userEmail'));
       const addedCategory = await axios.post('http://localhost:8800/categories/new/', {
         label: addCategory,
         value: addCategory,
+        userEmail: userEmail
       })
       // Update local cards
       setCurrentCategories([...currentCategories, addedCategory.data.message]);
@@ -163,11 +184,13 @@ const CardsDeck = () => {
     }
 
     try {
+      const userEmail = JSON.parse(localStorage.getItem('userEmail'));
       // Add card to database
       const newCard = await axios.post('http://localhost:8800/trivia/new/', {
         category: category,
         question: question,
         answer: answer,
+        userEmail: userEmail
       })
       // Update local cards
       setCurrentCards([...currentCards, newCard.data.message]);
@@ -217,11 +240,13 @@ const CardsDeck = () => {
       return;
     }
     try {
+      const userEmail = JSON.parse(localStorage.getItem('userEmail'));
       // Update database with edited value of a specific card
       const currDocument = await axios.put(`http://localhost:8800/trivia/update/${id}`, {
         category: category,
         question: question,
         answer: answer,
+        userEmail: userEmail
       })
 
       // Make sure card is edited in the frontend
@@ -232,7 +257,7 @@ const CardsDeck = () => {
         return currentCard;
       }))
 
-      // Rerender cardsafter state change
+      // Rerender cards after state change
       getCards();
 
     } catch(error) {
@@ -269,7 +294,6 @@ const CardsDeck = () => {
 
   const countCardsCategories = () => {
     const diffCategories = currentCards.map((currCard) => currCard.category)
-    console.log("categories:", diffCategories)
     let categoryDictionary = Object();
     for (let i = 0; i < diffCategories.length; i++){
       if (diffCategories[i] in categoryDictionary){
@@ -281,8 +305,8 @@ const CardsDeck = () => {
     return Object.entries(categoryDictionary);
   }
 
-  // Handling user logout
   const { logOut } = UserAuth();
+  // Handling user logout
   const handleLogOut = async () => {
     try {
       await logOut()

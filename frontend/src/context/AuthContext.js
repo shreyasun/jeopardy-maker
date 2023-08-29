@@ -14,6 +14,7 @@ export const AuthContextProvider = ({children}) => {
     }
 
     const logOut = () => {
+        localStorage.removeItem('userEmail');
         signOut(auth);
     }
 

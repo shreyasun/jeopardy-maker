@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React, useState, useEffect } from 'react'
 import Footer from "../footer/Footer"
 import Help from "../help/Help"
 import { Link } from "react-router-dom"
@@ -11,16 +11,25 @@ import { CgProfile } from "react-icons/cg"
 
 const Home = () => {
     const [mode, setMode] = useState("");
-    const { user } = UserAuth();
-    // Handling user logout
-    const { logOut } = UserAuth();
+    // Handling user stuff
+    const { logOut, user } = UserAuth();
+    const storedUserEmail = JSON.parse(localStorage.getItem('userEmail'));
+
+    useEffect(() => {
+        // Handling user email
+        if (!storedUserEmail && user && user.email){
+            localStorage.setItem('userEmail', JSON.stringify(user.email));
+        }
+    }, [])
+
     const handleLogOut = async () => {
         try {
-        await logOut()
+            await logOut()
         } catch (error) {
-        console.log(error)
+            console.log(error)
         }
     }
+
     return (
         <div className='home'>
             <div style={{display: "flex"}}>

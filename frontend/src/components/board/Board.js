@@ -25,13 +25,24 @@ const Board = () => {
   const [showAnswer, setShowAnswer] = useState(false)
   const [clickedCards, setClickedCards] = useState([]);
 
+  // user email to add to database
+  const { user, logOut } = UserAuth();
+  const userEmail = user.email;
+  const storedUserEmail = JSON.parse(localStorage.getItem('userEmail'));
+
+  if (!storedUserEmail){
+    localStorage.setItem('userEmail', JSON.stringify(user.email));
+  }
+
   // Fetch all added cards for display
   const getCards = async () => {
     try {
+      const userEmail = JSON.parse(localStorage.getItem('userEmail'));
       // Get cards from Database and set it to a local deck
       const allCards = await axios.get(`http://localhost:8800/trivia`);
-      setCards(allCards.data.message);
-      console.log("Current Cards:", allCards.data.message);
+      const allDocuments = allCards.data.message;
+      const userCards = allDocuments.filter(card => card.userEmail === userEmail)
+      setCards(userCards);
       setIsLoading(false);
     } catch(error) {
       // Handle error
@@ -42,6 +53,10 @@ const Board = () => {
 
   // Render all cards, currently clicked cards and current score
   useEffect(() => {
+    const storedUserEmail = localStorage.getItem('userEmail');
+    if (!storedUserEmail) {
+      localStorage.setItem('userEmail', JSON.stringify(user.email));
+    }
     getCards();
     const currScore = JSON.parse(localStorage.getItem('score'));
     if (currScore){
@@ -54,6 +69,7 @@ const Board = () => {
   }, [])
 
   // Get categories
+  
   const categories = [...new Set(cards.map(data => data.category))];
   // Create dictionary mapping category to associated question/answer
   let categorizedTrivia = {};
@@ -87,7 +103,6 @@ const Board = () => {
   }
 
   // Handling user logout
-  const { logOut } = UserAuth();
   const handleLogOut = async () => {
     try {
       await logOut()
