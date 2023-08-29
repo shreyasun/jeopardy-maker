@@ -16,7 +16,7 @@ h1{
 
 
 h5{
-  margin: 0;
+  margin: 5px;
 }
 
 .button1{
@@ -119,20 +119,19 @@ h5{
 
 /* LOGIN */
 
-.login{
+.login {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+  flex-direction: column;
+  height: 100vh;
   background-color: black;
 }
 
 .loginCard{
+  background-color: black;
   display: flex;
   flex-direction: column;
+  margin: auto;
   justify-content: center;
   align-items: center;
-  height: 70vh;
-  width: 60vw;
-  background-color: darkblue;
+  flex-wrap: wrap;
 }
