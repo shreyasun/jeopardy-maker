@@ -1,6 +1,7 @@
 # MERN Stack Project - Jeopardy Maker
 #### By Shreya Sundar
-(Demo Video Link coming soon!)
+
+### [Demo Video](https://youtu.be/h5tqkI4YimE)
 
 ### Description
 As someone who loves trivia and learning random facts, I wanted to create a project that encompasses that interest. I really enjoy watching Jeopardy!, one of the most popular American game shows, which inspired me to create a web application modeled after the Jeopardy question and answer format. I decided to create a Jeopardy Maker, where users can add trivia cards to be generated into an interactive Jeopardy Board. It includes a Firebase login, MongoDB Database, RESTful API calls using axios and a Node-Express Server, and a user interface developed by React.js. 
@@ -14,7 +15,7 @@ As someone who loves trivia and learning random facts, I wanted to create a proj
 5. Run backend using `npm start`. You should see a success message on your terminal output, which indicates that the server has connected to the database.
 6. Go to `http://localhost:3000/login` and start using the application!
 
-Here is a guide to using this application: (to be linked soon!)
+### [Here is a guide to using this application](https://docs.google.com/document/d/1hjBvqoq0zneCcZTYWjvLQzewFjbkgU4WAn2RoOblrlA/edit?usp=sharing)
 
 ### Resources used:
 I did this project with knowledge of Javascript and React. Here are some other resources I used for other parts.
@@ -34,4 +35,5 @@ This is my stopping point for now, although if I were to come back to this proje
 - Use a different database, or use MongoDB Atlas on MongoDB Cloud. This would definitely help during deployment.
 - Significantly change my UI structure. In hindsight, I realize that I could have created a lot more individual components with props to make my code a lot more cleaner and less repetitive. However while coding I was pretty much putting my ideas down and going with what worked at the moment!
 - Continue to identify any more bugs... there's probably still some in there unfortunately
+
 ... and more!
