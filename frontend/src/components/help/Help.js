@@ -4,7 +4,8 @@ const Help = () => {
   return (
     <div style={{display: "flex", flexDirection: "column", padding: "10"}}>
         <h2>Instructions</h2>
-        <p style={{textAlign: "left"}}>The app will load with a simple homepage with the option to edit questions or view game instructions.</p>
+        <p style={{textAlign: "left"}}>The app will load with a login which will ask you to login with Google.</p>
+        <p style={{textAlign: "left"}}>Once successfully logged in, the app will render a simple homepage with the option to edit questions or view game instructions.</p>
         <h4>Editing the Questions</h4>
         <ol style={{textAlign: "left"}}>
             <li>If you click on the option to edit questions, a page with the question management system will open up.</li>
