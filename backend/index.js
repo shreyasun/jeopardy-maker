@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 // initialize server and database
 const express = require("express");
 const mongoose = require("mongoose");
@@ -7,7 +5,11 @@ const cors = require('cors');
 
 // initializes instance of an Express application
 const app = express();
-app.use(cors());
+app.use(
+    cors({
+        origin: ["http://localhost:3000", "https://jeopardy-maker.onrender.com"]
+    })
+);
 // adds middleware to Express application to parse incoming JSON data in requests
 app.use(express.json());
 
