@@ -34,12 +34,12 @@ This is my stopping point for now, although if I were to come back to this proje
 - Deploy it online!
 - Use a different database, or use MongoDB Atlas on MongoDB Cloud. This would definitely help during deployment.
 - Significantly change my UI structure. In hindsight, I realize that I could have created a lot more individual components with props to make my code a lot more cleaner and less repetitive. However while coding I was pretty much putting my ideas down and going with what worked at the moment!
-- 
+- Continue to identify any more bugs... there's probably still some in there unfortunately
+
+... and more!
 
 ### UPDATE NOV 2025!
 After 2 years I came back to this project and introduced some AI into it :)
 Code: https://github.com/shreyasun/AI-Jeopardy-Study-Tool
 App: https://ai-jeopardy-study-tool.vercel.app/
-- Continue to identify any more bugs... there's probably still some in there unfortunately
 
-... and more!
